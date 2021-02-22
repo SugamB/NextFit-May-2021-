@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
                     //This leads to the next page i.e, start the next activity.
                     Intent intent = new Intent(MainActivity.this,  LoginActivity.class);
                     startActivity(intent);
-
                     //Let's Finish Splash Activity since we don't want to show this when user press back button.
                     finish();
                 } catch (Exception ignored) {
