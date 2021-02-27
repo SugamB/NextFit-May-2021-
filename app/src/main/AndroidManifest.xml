@@ -19,7 +19,7 @@
         android:label="NextFit"
         android:roundIcon="@drawable/newlogo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.NoActionBar"
         >
         <activity
             android:name=".SignUpActivity"
