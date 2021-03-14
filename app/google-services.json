@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "162058133807",
+    "project_id": "next-fit-app",
+    "storage_bucket": "next-fit-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162058133807:android:845c5f8cbe3ab99ab2c1da",
+        "android_client_info": {
+          "package_name": "com.palhackmagic.nextfit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162058133807-o3pc1jso0d7gr0sl6i590dmlqok6tr0n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBw2-ZeUug5zAFhPjEULUOOODvWvk9gztM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162058133807-o3pc1jso0d7gr0sl6i590dmlqok6tr0n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
