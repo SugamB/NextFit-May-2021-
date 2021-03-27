@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.palhackmagic.nextfit.MainActivity;
 import com.palhackmagic.nextfit.R;
 import com.palhackmagic.nextfit.SignUpActivity;
+import com.palhackmagic.nextfit.data.Landing;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -100,6 +101,14 @@ public class LoginActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
                 }
+        });
+
+            //This is test for sign in button and going to the landing page
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, Landing.class));
+            }
         });
     }
 
