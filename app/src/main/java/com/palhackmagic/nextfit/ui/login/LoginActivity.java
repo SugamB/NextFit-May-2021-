@@ -58,7 +58,8 @@ public class LoginActivity extends AppCompatActivity {
                 mAuth.signInWithEmailAndPassword(emailId, pwd). addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                     @Override
                     public void onSuccess(AuthResult authResult) {
-                        startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
+                        // go to fitbit sync
+                        startActivity(new Intent(LoginActivity.this, Landing.class));
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -75,20 +76,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
             }
         });
-
-            //This is test for sign in button and going to the landing page
-        signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, Landing.class));
-            }
-        });
     }
     @Override
     protected void onStart() {
         super.onStart();
         if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
+            // go to fitbit sync
+            startActivity(new Intent(LoginActivity.this, Landing.class));
             finish();
         }
     }
