@@ -1,6 +1,5 @@
 package com.palhackmagic.nextfit.ui.login;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,101 +8,80 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.palhackmagic.nextfit.MainActivity;
 import com.palhackmagic.nextfit.R;
 import com.palhackmagic.nextfit.SignUpActivity;
 
 public class LoginActivity extends AppCompatActivity {
+    EditText email, password;
+    Button btnsignin, btnsignup;
+    FirebaseAuth mAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText usernameEditText = findViewById(R.id.email);
-        final EditText passwordEditText = findViewById(R.id.password);
-        final Button signin = findViewById(R.id.signin);
-        final Button signup = findViewById(R.id.signup);
-        final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+        mAuth = FirebaseAuth.getInstance();
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        btnsignin = findViewById(R.id.signin);
+        btnsignup = findViewById(R.id.signup);
+        //final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
+        btnsignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String emailId = email.getText().toString();
+                String pwd = password.getText().toString();
 
-//        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
-//            @Override
-//            public void onChanged(@Nullable LoginFormState loginFormState) {
-//                if (loginFormState == null) {
-//                    return;
-//                }
-//                signin.setEnabled(loginFormState.isDataValid());
-//                if (loginFormState.getUsernameError() != null) {
-//                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-//                }
-//                if (loginFormState.getPasswordError() != null) {
-//                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-//                }
-//            }
-//        });
-
-//        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
-//            @Override
-//            public void onChanged(@Nullable LoginResult loginResult) {
-//                if (loginResult == null) {
-//                    return;
-//                }
-//                loadingProgressBar.setVisibility(View.GONE);
-//                if (loginResult.getError() != null) {
-//                    showLoginFailed(loginResult.getError());
-//                }
-////                if (loginResult.getSuccess() != null) {
-////                    updateUiWithUser(loginResult.getSuccess());
-////                }
-//                setResult(Activity.RESULT_OK);
-//
-//                //Complete and destroy login activity once successful
-//                finish();
-//            }
-//        });
-
-//        usernameEditText.addTextChangedListener(afterTextChangedListener);
-//        passwordEditText.addTextChangedListener(afterTextChangedListener);
-//        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_DONE) {
-////                    loginViewModel.login(usernameEditText.getText().toString(),
-////                            passwordEditText.getText().toString());
-//                }
-//                return false;
-//            }
-//        });
-
-//        signin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                loadingProgressBar.setVisibility(View.VISIBLE);
-////                loginViewModel.login(usernameEditText.getText().toString(),
-////                        passwordEditText.getText().toString());
-//            }
-//        });
-
-//        signup.setOnClickListener(new OnClickListener(){
-//                //loadingProgressBar.setVisibility(View.VISIBLE);
-//                public void onClick(View v){
-//                    startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
-//                }
-
-                signup.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+                if (emailId.isEmpty()) {
+                    email.setError("Please enter the email address");
+                    email.requestFocus();
+                } else if (pwd.isEmpty()) {
+                    password.setError("Please enter your password");
+                    password.requestFocus();
+                } else if (emailId.isEmpty() && pwd.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Fields are empty", Toast.LENGTH_SHORT);
                 }
+
+                mAuth.signInWithEmailAndPassword(emailId, pwd). addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(LoginActivity.this, "Login Unsuccessful", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+        btnsignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, SignUpActivity.class));
+            }
         });
     }
-
-//    private void showLoginFailed(@StringRes Integer errorString) {
-//        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
+            finish();
+        }
+    }
 }
+
