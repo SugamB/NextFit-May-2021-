@@ -18,7 +18,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.palhackmagic.nextfit.R;
+import com.palhackmagic.nextfit.data.Landing;
 import com.palhackmagic.nextfit.ui.login.LoginActivity;
+import com.palhackmagic.nextfit.data.Landing;
 
 public class SignUpActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
@@ -92,16 +95,15 @@ public class SignUpActivity extends AppCompatActivity {
 
                 progressbar.setVisibility(View.VISIBLE);
 
-                mAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onSuccess(AuthResult authResult) {
-                        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                        finish();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(getApplicationContext(), Landing.class));
+                        }else {
+                            Toast. makeText(SignUpActivity.this, "Error Signing Up" , Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
             }
