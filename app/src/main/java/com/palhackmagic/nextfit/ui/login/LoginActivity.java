@@ -59,18 +59,20 @@ public class LoginActivity extends AppCompatActivity {
                 else if (emailId.isEmpty() && pwd.isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Fields are empty", Toast.LENGTH_SHORT);
                 }
-
-                mAuth.signInWithEmailAndPassword(emailId, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), Landing.class));
-                        }else {
-                            Toast.makeText(LoginActivity.this, "Login Unsuccessful, check your credentials", Toast.LENGTH_SHORT).show();
+                else {
+                    mAuth.signInWithEmailAndPassword(emailId, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(getApplicationContext(), Landing.class));
+                            }else {
+                                Toast.makeText(LoginActivity.this, "Login Unsuccessful, check your credentials", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
             }
         });
 
