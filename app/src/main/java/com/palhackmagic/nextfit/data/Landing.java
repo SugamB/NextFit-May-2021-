@@ -19,6 +19,7 @@ public class Landing extends AppCompatActivity {
 
     Button button1;
     Button logout;
+//    Button callapi;
     FirebaseAuth mAuth;
 
     String url = "https://www.fitbit.com/oauth2/authorize?" +
@@ -36,6 +37,7 @@ public class Landing extends AppCompatActivity {
 
         button1= findViewById(R.id.button);
         logout= findViewById(R.id.signout);
+//        callapi = findViewById(R.id.callapi);
 
         button1.setOnClickListener(new View.OnClickListener() {
             @Override

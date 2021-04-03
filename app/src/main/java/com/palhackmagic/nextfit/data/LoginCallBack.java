@@ -31,5 +31,13 @@ public class LoginCallBack extends AppCompatActivity {
         Log.i("TAG", accessToken);
         Log.i("TAG", userId);
         Log.i("TAG", tokenType);
+
+        Intent intent = new Intent(getApplicationContext(), Testapi.class);
+        intent.putExtra("string", string);
+        intent.putExtra("accessToken",accessToken);
+        intent.putExtra("userId",userId);
+        intent.putExtra("tokenType",tokenType);
+        startActivity(intent);
+
     }
 }
