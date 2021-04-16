@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ProgressBar;
 
 import com.palhackmagic.nextfit.R;
 
@@ -28,6 +29,8 @@ public class Testapi extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testapi);
 
+        ProgressBar progressBar = findViewById(R.id.progressBar);
+        progressBar.setProgress(100); // 0 <= value <= 100
         Log.i("TAG", "------------------TestAPI activity starts here ---------------");
         Log.i("TAG", getIntent().getStringExtra("string"));
         Log.i("TAG", getIntent().getStringExtra("accessToken"));
