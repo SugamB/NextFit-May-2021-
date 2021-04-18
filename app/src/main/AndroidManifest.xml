@@ -19,7 +19,8 @@
         android:roundIcon="@drawable/newlogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".data.Testapi"></activity>
+        <activity android:name=".data.model.Listview"/>
+        <activity android:name=".data.Testapi" />
         <activity android:name=".data.Landing" />
         <activity
             android:name=".SignUpActivity"
