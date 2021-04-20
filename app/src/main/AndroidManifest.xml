@@ -2,15 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.palhackmagic.nextfit">
 
-    <uses-sdk
-        android:minSdkVersion="28"
-        android:targetSdkVersion="28" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <uses-feature android:name="android.hardware.type.watch" />
-
     <application
         android:allowBackup="true"
         android:extractNativeLibs="false"
@@ -19,8 +10,17 @@
         android:roundIcon="@drawable/newlogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".data.Testapi"></activity>
+        <activity android:name=".profile"></activity>
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
+        <activity android:name=".data.Testapi" />
         <activity android:name=".data.Landing" />
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up" />
@@ -48,6 +48,29 @@
                     android:scheme="nextfit" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="false" />
+        <uses-library
+            android:name="com.google.android.maps"
+            android:required="false" />
     </application>
+
+    <uses-feature android:name="android.hardware.type.watch" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-sdk
+        android:minSdkVersion="28"
+        android:targetSdkVersion="28" />
 
 </manifest>

@@ -3,24 +3,18 @@ package com.palhackmagic.nextfit.ui.login;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.palhackmagic.nextfit.MainActivity;
 import com.palhackmagic.nextfit.R;
 import com.palhackmagic.nextfit.SignUpActivity;
 import com.palhackmagic.nextfit.data.Landing;
@@ -38,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
-        btnsignin = findViewById(R.id.signin);
+        btnsignin = findViewById(R.id.more);
         btnsignup = findViewById(R.id.signup);
         //ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
@@ -84,13 +78,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-//            startActivity(new Intent(getApplicationContext(), Landing.class));
-//            finish();
-//        }
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), Landing.class));
+            finish();
+        }
+    }
 }
 

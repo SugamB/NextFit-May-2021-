@@ -22,8 +22,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.palhackmagic.nextfit.R;
 import com.palhackmagic.nextfit.data.Landing;
-import com.palhackmagic.nextfit.ui.login.LoginActivity;
+
 import com.palhackmagic.nextfit.data.Landing;
+import com.palhackmagic.nextfit.ui.login.LoginActivity;
 
 import java.util.HashMap;
 
@@ -109,7 +110,7 @@ public class SignUpActivity extends AppCompatActivity {
                             HashMap<String, Object> map = new HashMap<>();
                             map.put("fname",fullName);
                             map.put("email",email);
-                            map.put("phone number",phone);
+                            map.put("phoneNumber",phone);
                             mrootref.child("Users").child(mAuth.getCurrentUser().getUid()).setValue(map);
                             startActivity(new Intent(getApplicationContext(), Landing.class));
                         }else {

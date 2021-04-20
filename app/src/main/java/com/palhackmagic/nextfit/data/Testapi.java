@@ -29,7 +29,6 @@ public class Testapi extends AppCompatActivity {
         Log.i("TAG", getIntent().getStringExtra("userId"));
         Log.i("TAG", getIntent().getStringExtra("tokenType"));
 
-
         String url = "https://api.fitbit.com/1/user/-/profile.json";
         String activity = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1m.json";
 //        String header1 = ""
