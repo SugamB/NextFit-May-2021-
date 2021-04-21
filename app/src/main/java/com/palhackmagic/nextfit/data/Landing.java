@@ -40,7 +40,7 @@ public class Landing extends AppCompatActivity {
             "&client_id=22C569" +
             "&redirect_uri=nextfit://logincallback" +
             "&scope=activity%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight" +
-            "&expires_in=604800";
+            "&expires_in=3625860";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,10 +97,9 @@ public class Landing extends AppCompatActivity {
         prof.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(getApplicationContext(), profile.class));
             }
         });
-
     }
 
     public static void openCustomTabs(Activity activity, CustomTabsIntent customTabsIntent, Uri uri){

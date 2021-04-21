@@ -22,6 +22,7 @@
         <activity android:name=".data.model.Listview"/>
         <activity android:name=".data.Testapi" />
         <activity android:name=".data.Landing" />
+        <activity android:name=".profile" />
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_sign_up" />

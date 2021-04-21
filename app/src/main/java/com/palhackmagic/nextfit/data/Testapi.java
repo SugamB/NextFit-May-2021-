@@ -2,16 +2,22 @@ package com.palhackmagic.nextfit.data;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.palhackmagic.nextfit.R;
+import com.palhackmagic.nextfit.profile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -22,12 +28,19 @@ import okhttp3.Response;
 import android.widget.TextView;
 
 public class Testapi extends AppCompatActivity {
-
+    FirebaseAuth mAuth;
+    private DatabaseReference mrootref;
     public String[] separated;
+    String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testapi);
+
+        mrootref = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getCurrentUser().getUid();
 
         final TextView textViewSteps = (TextView) findViewById(R.id.textviewSteps);
         final TextView textViewProfile = (TextView) findViewById(R.id.textviewProfile);
@@ -95,18 +108,23 @@ public class Testapi extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+
                                 String a = key + " -> " + value;
-                                textViewProfile.append(a + "\n");
+//                                textViewProfile.append(a + "\n");
                             }
                         });
+                        final HashMap<String, Object> map = new HashMap<>();
+                        map.put(key, value);
+                        mrootref.child("Users").child(userId).child("fitbit").updateChildren(map);
                     }
+                    startActivity(new Intent(getApplicationContext(), profile.class));
+
                 } catch (JSONException e) {
 
                 }
             }
 
         });
-
 
         Log.i("TAG", "------------------222222---------------");
         client2.newCall(request2).enqueue(new Callback() {
@@ -138,7 +156,11 @@ public class Testapi extends AppCompatActivity {
                             }
                         });
 
+                        final HashMap<String, Object> map = new HashMap<>();
+                        map.put(date, steps);
+                        mrootref.child("Users").child(userId).child("fitbitsteps").updateChildren(map);
                     }
+
                 } catch (JSONException e) {
 
                 }
