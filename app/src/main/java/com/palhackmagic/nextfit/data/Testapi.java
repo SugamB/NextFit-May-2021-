@@ -42,22 +42,30 @@ public class Testapi extends AppCompatActivity {
 //        Log.i("TAG", getIntent().getStringExtra("tokenType"));
 
 
-        String url = "https://api.fitbit.com/1/user/-/profile.json";
+        String profile = "https://api.fitbit.com/1/user/-/profile.json";
 
-        String url2 = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1w.json";
+        String steps = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1w.json";
+
+        String heart = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d.json";
 //        String header1 = ""
-        Log.i("TAG", url);
+//        Log.i("TAG", profile);
 
         OkHttpClient client = new OkHttpClient();
         OkHttpClient client2 = new OkHttpClient();
+        OkHttpClient client3 = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url(url)
+                .url(profile)
                 .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
                 .build();
 
         Request request2 = new Request.Builder()
-                .url(url2)
+                .url(steps)
+                .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
+                .build();
+
+        Request request3 = new Request.Builder()
+                .url(heart)
                 .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
                 .build();
 
@@ -102,6 +110,26 @@ public class Testapi extends AppCompatActivity {
                 String mMessage = response.body().string();
                 separated = mMessage.split("[{]",0);
                 Log.i("TAG", "--------------------Daily Step Counts of last 7 days--------------------");
+                for (String a : separated)
+                    Log.i("TAG", a);
+            }
+
+        });
+
+        client2.newCall(request3).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                String mMessage = e.getMessage().toString();
+                Log.w("failure Response", mMessage);
+                //call.cancel();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String mMessage = response.body().string();
+                separated = mMessage.split("[{]",0);
+                Log.i("TAG", "--------------------Heart Rate--------------------");
                 for (String a : separated)
                     Log.i("TAG", a);
             }
