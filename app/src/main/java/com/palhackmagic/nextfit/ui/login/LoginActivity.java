@@ -84,13 +84,14 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
-//            startActivity(new Intent(getApplicationContext(), Landing.class));
-//            finish();
-//        }
-//    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(getApplicationContext(), Landing.class));
+            finish();
+        }
+    }
 }
 

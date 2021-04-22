@@ -18,13 +18,18 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.palhackmagic.nextfit.R;
 import com.palhackmagic.nextfit.data.Landing;
 import com.palhackmagic.nextfit.ui.login.LoginActivity;
 import com.palhackmagic.nextfit.data.Landing;
 
+import java.util.HashMap;
+
 public class SignUpActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
+    private DatabaseReference mrootref;
     EditText mphone, memail, mpassword, mrepassword, mfullname;
     Button mbtn_register, mbtn_gotologin;
     ProgressBar progressbar;
@@ -35,6 +40,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        mrootref = FirebaseDatabase.getInstance().getReference();
         mphone = findViewById(R.id.phone);
         memail = findViewById(R.id.email);
         mpassword = findViewById(R.id.password);
@@ -56,12 +62,12 @@ public class SignUpActivity extends AppCompatActivity {
         mbtn_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = memail.getText().toString().trim();
+                final String email = memail.getText().toString().trim();
                 String password = mpassword.getText().toString().trim();
                 String repassword = mrepassword.getText().toString().trim();
                 String phoneNum = mphone.getText().toString().trim();
-                String phone = phoneNum.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
-                String fullName = mfullname.getText().toString().trim();
+                final String phone = phoneNum.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3");
+                final String fullName = mfullname.getText().toString().trim();
 
                 if (TextUtils.isEmpty(fullName)) {
                     mfullname.setError("Full Name is Required");
@@ -100,6 +106,11 @@ public class SignUpActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(SignUpActivity.this, "User Created", Toast.LENGTH_SHORT).show();
+                            HashMap<String, Object> map = new HashMap<>();
+                            map.put("fname",fullName);
+                            map.put("email",email);
+                            map.put("phone number",phone);
+                            mrootref.child("Users").child(mAuth.getCurrentUser().getUid()).setValue(map);
                             startActivity(new Intent(getApplicationContext(), Landing.class));
                         }else {
                             Toast. makeText(SignUpActivity.this, "Error Signing Up" , Toast.LENGTH_SHORT).show();

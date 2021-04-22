@@ -33,7 +33,7 @@ public class Testapi extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testapi);
 
-        final TextView text = (TextView)findViewById(R.id.textview);
+//        final TextView text = (TextView)findViewById(R.id.textview);
 
 //        Log.i("TAG", "------------------TestAPI activity starts here ---------------");
 //        Log.i("TAG", getIntent().getStringExtra("string"));

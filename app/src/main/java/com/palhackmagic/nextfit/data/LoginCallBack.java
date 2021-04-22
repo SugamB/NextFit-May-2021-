@@ -21,13 +21,11 @@ public class LoginCallBack extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         onNewIntent(getIntent());
+
+        //get access token with substring (start of token(#access_token=[...]), end of token + 1)
         String accessToken = string.substring(string.indexOf("#access_token") + 14, string.indexOf("&user_id"));
         String userId = string.substring(string.indexOf("&user_id")+9, string.indexOf("&scope"));
         String tokenType = string.substring(string.indexOf("&token_type")+12,string.indexOf("&expires_in"));
-
-//        String accessToken = string.substring(string.indexOf("&access_token") + 14);
-//        String userId = string.substring(string.indexOf("&user_id")+9, string.indexOf("&token_type"));
-//        String tokenType = string.substring(string.indexOf("&token_type")+12,string.indexOf("&expires_in"));
 
         Log.i("TAG", string);
         Log.i("TAG", accessToken);
