@@ -2,10 +2,13 @@ package com.palhackmagic.nextfit.data;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.drawable.ClipDrawable;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.palhackmagic.nextfit.R;
+import com.palhackmagic.nextfit.ui.StepsUI;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,6 +22,10 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class Testapi extends AppCompatActivity {
@@ -29,8 +36,11 @@ public class Testapi extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testapi);
 
+
         final TextView textViewSteps = (TextView) findViewById(R.id.textviewSteps);
         final TextView textViewProfile = (TextView) findViewById(R.id.textviewProfile);
+        final Button nextButton = (Button) findViewById(R.id.nextActivity);
+
         Log.i("TAG", "------------------TestAPI activity starts here ---------------");
         Log.i("TAG", getIntent().getStringExtra("string"));
         Log.i("TAG", getIntent().getStringExtra("accessToken"));
@@ -147,6 +157,14 @@ public class Testapi extends AppCompatActivity {
         });
 
         Log.i("TAG", "------------------333333---------------");
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), StepsUI.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

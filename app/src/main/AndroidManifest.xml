@@ -6,10 +6,11 @@
         android:minSdkVersion="28"
         android:targetSdkVersion="28" />
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature android:name="android.hardware.type.watch" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +20,19 @@
         android:roundIcon="@drawable/newlogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".data.model.Listview"/>
+
+        <!--
+               Set to true if your app is Standalone, that is, it does not require the handheld
+               app to run.
+        -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="true" />
+
+        <activity
+            android:name=".ui.StepsUI"
+            android:label="@string/title_activity_steps_u_i" />
+        <activity android:name=".data.model.Listview" />
         <activity android:name=".data.Testapi" />
         <activity android:name=".data.Landing" />
         <activity
