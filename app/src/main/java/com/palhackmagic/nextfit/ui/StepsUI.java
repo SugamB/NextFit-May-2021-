@@ -1,5 +1,6 @@
 package com.palhackmagic.nextfit.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -111,7 +112,6 @@ public class StepsUI extends AppCompatActivity {
 
             }
         });
-
     }
 
     public void updateText(TextView textView, int current_steps, int goal_steps) {

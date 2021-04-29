@@ -20,6 +20,9 @@
         android:roundIcon="@drawable/newlogo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="false" />
 
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
@@ -30,8 +33,11 @@
             android:value="true" />
 
         <activity
+            android:name=".ui.StepsGraph"
+            android:label="@string/title_activity_steps_graph"/>
+        <activity
             android:name=".ui.StepsUI"
-            android:label="@string/title_activity_steps_u_i" />
+            android:label="@string/title_activity_steps_u_i"/>
         <activity android:name=".data.model.Listview" />
         <activity android:name=".data.Testapi" />
         <activity android:name=".data.Landing" />

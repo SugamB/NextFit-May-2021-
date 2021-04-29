@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.palhackmagic.nextfit.R;
+import com.palhackmagic.nextfit.data.model.Steps;
+import com.palhackmagic.nextfit.ui.StepsGraph;
 import com.palhackmagic.nextfit.ui.StepsUI;
 
 import org.json.JSONArray;
@@ -15,6 +17,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -31,6 +35,8 @@ import android.widget.TextView;
 public class Testapi extends AppCompatActivity {
 
     public String[] separated;
+    public ArrayList<Steps> stepsArrayList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +46,7 @@ public class Testapi extends AppCompatActivity {
         final TextView textViewSteps = (TextView) findViewById(R.id.textviewSteps);
         final TextView textViewProfile = (TextView) findViewById(R.id.textviewProfile);
         final Button nextButton = (Button) findViewById(R.id.nextActivity);
+        final Button btnGraph = (Button) findViewById(R.id.nextActivityGraph);
 
         Log.i("TAG", "------------------TestAPI activity starts here ---------------");
         Log.i("TAG", getIntent().getStringExtra("string"));
@@ -74,7 +81,7 @@ public class Testapi extends AppCompatActivity {
                 .build();
 
         Request request2 = new Request.Builder()
-                .url(stepsActivityWeekUrl)
+                .url(stepActivityMonthUrl)
                 .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
                 .build();
 
@@ -140,6 +147,7 @@ public class Testapi extends AppCompatActivity {
                         final String date = jsonObject.optString("dateTime");
 
                         Log.i("TAG", date + " -> " + steps);
+                        stepsArrayList.add(new Steps(date, steps));
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -162,6 +170,17 @@ public class Testapi extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), StepsUI.class);
+                startActivity(intent);
+            }
+        });
+
+        btnGraph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), StepsGraph.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("StepsArrayList", (Serializable)stepsArrayList);
+                intent.putExtra("BUNDLE", bundle);
                 startActivity(intent);
             }
         });
