@@ -3,6 +3,7 @@ package com.palhackmagic.nextfit.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -87,7 +88,6 @@ public class StepsGraph extends AppCompatActivity {
         left.setTextSize(15);
         left.setAxisLineWidth(1.5f);
 
-
         YAxis right = lineChart.getAxisRight();
         right.setDrawGridLines(false);
         right.setDrawLabels(false);
@@ -99,5 +99,14 @@ public class StepsGraph extends AppCompatActivity {
         lineChart.invalidate();
 
         textView.setText("");
+
+        final TextView yAxisTitle = findViewById(R.id.yAxisTitle);
+        // doesnt work, returns wrap content
+        int height = yAxisTitle.getLayoutParams().height;
+        int width = yAxisTitle.getLayoutParams().width;
+        //assigning opposite values because layout is vertical
+        Log.i("P", height + " ------ " + width);
+        yAxisTitle.setLayoutParams(new LinearLayout.LayoutParams(height, width));
+        Log.i("P", height + " -- " + width);
     }
 }

@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Testapi extends AppCompatActivity {
 
@@ -117,7 +118,7 @@ public class Testapi extends AppCompatActivity {
                             }
                         });
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
 
                 }
             }
@@ -157,7 +158,7 @@ public class Testapi extends AppCompatActivity {
                         });
 
                     }
-                } catch (JSONException e) {
+                } catch (Exception e) {
 
                 }
             }
