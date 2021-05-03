@@ -6,6 +6,8 @@
     <color name="white">#FFFFFF</color>
     <color name="red">#DC143C</color>
     <color name="blue">#0000CD</color>
+    <color name="chartColor">#31D37A</color>
+    <color name="black">#000000</color>
 </resources>
 
 

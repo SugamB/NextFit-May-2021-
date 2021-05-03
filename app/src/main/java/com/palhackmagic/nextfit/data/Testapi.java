@@ -10,7 +10,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.palhackmagic.nextfit.R;
-import com.palhackmagic.nextfit.profile;
+import com.palhackmagic.nextfit.data.model.Steps;
+import com.palhackmagic.nextfit.ui.StepsGraph;
+import com.palhackmagic.nextfit.ui.StepsUI;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +20,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -25,6 +29,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class Testapi extends AppCompatActivity {
@@ -32,6 +38,7 @@ public class Testapi extends AppCompatActivity {
     private DatabaseReference mrootref;
     public String[] separated;
     String userId;
+    public ArrayList<Steps> stepsArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,9 @@ public class Testapi extends AppCompatActivity {
 
         final TextView textViewSteps = (TextView) findViewById(R.id.textviewSteps);
         final TextView textViewProfile = (TextView) findViewById(R.id.textviewProfile);
+        final Button nextButton = (Button) findViewById(R.id.nextActivity);
+        final Button btnGraph = (Button) findViewById(R.id.nextActivityGraph);
+
         Log.i("TAG", "------------------TestAPI activity starts here ---------------");
         Log.i("TAG", getIntent().getStringExtra("string"));
         Log.i("TAG", getIntent().getStringExtra("accessToken"));
@@ -77,7 +87,7 @@ public class Testapi extends AppCompatActivity {
                 .build();
 
         Request request2 = new Request.Builder()
-                .url(stepsActivityWeekUrl)
+                .url(stepActivityMonthUrl)
                 .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
                 .build();
 
@@ -121,7 +131,7 @@ public class Testapi extends AppCompatActivity {
 //                    MAYBE NEED TO SPLIT UP THESE CALLS LATER
 //                    startActivity(new Intent(getApplicationContext(), profile.class));
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
 
                 }
             }
@@ -150,6 +160,7 @@ public class Testapi extends AppCompatActivity {
                         final String date = jsonObject.optString("dateTime");
 
                         Log.i("TAG", date + " -> " + steps);
+                        stepsArrayList.add(new Steps(date, steps));
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -163,7 +174,7 @@ public class Testapi extends AppCompatActivity {
                         mrootref.child("Users").child(userId).child("fitbitsteps").updateChildren(map);
                     }
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
 
                 }
             }
@@ -171,6 +182,25 @@ public class Testapi extends AppCompatActivity {
         });
 
         Log.i("TAG", "------------------333333---------------");
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), StepsUI.class);
+                startActivity(intent);
+            }
+        });
+
+        btnGraph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), StepsGraph.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("StepsArrayList", (Serializable)stepsArrayList);
+                intent.putExtra("BUNDLE", bundle);
+                startActivity(intent);
+            }
+        });
 
     }
 }
