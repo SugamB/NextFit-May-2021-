@@ -117,7 +117,9 @@ public class Testapi extends AppCompatActivity {
                         map.put(key, value);
                         mrootref.child("Users").child(userId).child("fitbit").updateChildren(map);
                     }
-                    startActivity(new Intent(getApplicationContext(), profile.class));
+//                    DONT START ACTIVITY JUST AFTER GETTING PROFILE, NEED TO GET DATA TOO
+//                    MAYBE NEED TO SPLIT UP THESE CALLS LATER
+//                    startActivity(new Intent(getApplicationContext(), profile.class));
 
                 } catch (JSONException e) {
 
