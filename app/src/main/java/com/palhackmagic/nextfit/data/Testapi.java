@@ -64,6 +64,8 @@ public class Testapi extends AppCompatActivity {
         String profileUrl = "https://api.fitbit.com/1/user/-/profile.json";
         String stepActivityMonthUrl = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1m.json";
         String stepsActivityWeekUrl = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1w.json";
+        String activityUrl = "https://api.fitbit.com/1/user/-/activities/date/today.json";
+        String heartrateUrl = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1min.json";
 
         ;
 
@@ -80,6 +82,8 @@ public class Testapi extends AppCompatActivity {
 
         OkHttpClient client = new OkHttpClient();
         OkHttpClient client2 = new OkHttpClient();
+        OkHttpClient client3 = new OkHttpClient();
+        OkHttpClient client4 = new OkHttpClient();
 
         Request request = new Request.Builder()
                 .url(profileUrl)
@@ -91,6 +95,15 @@ public class Testapi extends AppCompatActivity {
                 .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
                 .build();
 
+        Request request3 = new Request.Builder()
+                .url(activityUrl)
+                .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
+                .build();
+
+        Request request4 = new Request.Builder()
+                .url(heartrateUrl)
+                .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
+                .build();
 //        Response response = client.newCall(request).execute();
 //        Log.e(TAG, response.body().string());
         Log.i("TAG", "------------------11111111---------------");
@@ -182,6 +195,58 @@ public class Testapi extends AppCompatActivity {
         });
 
         Log.i("TAG", "------------------333333---------------");
+        client3.newCall(request3).enqueue(new Callback() {
+              @Override
+              public void onFailure(Call call, IOException e) {
+                  String mMessage = e.getMessage().toString();
+                  Log.w("failure Response", mMessage);
+//call.cancel();
+              }
+
+              @Override
+              public void onResponse(Call call, Response response) throws IOException {
+
+                  String mMessage = response.body().string();
+                  Log.i("TAG", mMessage);
+              }
+});
+
+
+        client4.newCall(request4).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                String mMessage = e.getMessage().toString();
+                Log.w("failure Response", mMessage);
+//call.cancel();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String mMessage = response.body().string();
+                Log.i("TAG", "Heartrate should be here");
+                Log.i("TAG", mMessage);
+            }
+        });
+                             /*
+                            //      NEED TO IMPLEMENT A SIMPLE CALCULATION FOR GOALS AND SCORING
+                            if Todaysteps> Stepsgoal then stepsscore = 100;
+                            else    Stepsdiff = Stepsgoal-Stepstoday and normalize it and give stepsscore
+                            if caloriesdiff > goal then Caloriesscore = 100;
+                            else  Calories diff = (calories goal - calories) and normalize it and give Caloriesscore
+
+                            GET AVERAGE HEARTRATE FOR TODAY
+                            hrdiff = hrgoal - hraverage
+                            if abs(hraverage) = 5 then hrscore =100
+                            else hrscore = normalized hrdiff
+
+                            NOW, GIVE PROPER VALUATION
+                            score = stepsscore *0.3 +caloriesscore *0.3 +hrscore *0.3 + Randomizer(1-10) *0.1
+
+                            Using randomizer to give a sense of differing score with each passing moment
+                            */
+
+
 
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
