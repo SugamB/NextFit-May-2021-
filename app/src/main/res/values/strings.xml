@@ -31,4 +31,7 @@
     -->
     <string name="hello_world">Hello Square World!</string>
     <string name="title_activity_landing">Landing</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_steps_u_i">StepsUI</string>
+    <string name="title_activity_steps_graph">StepsGraph</string>
 </resources>

@@ -13,7 +13,7 @@
     tools:context=".ui.login.LoginActivity">
 
     <Button
-        android:id="@+id/signin"
+        android:id="@+id/more"
         android:layout_width="184dp"
         android:layout_height="56dp"
         android:text="@string/action_sign_in"
@@ -65,7 +65,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.401"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signin"
+        app:layout_constraintTop_toBottomOf="@+id/more"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
@@ -108,7 +108,7 @@
         android:inputType="textPassword"
         android:padding="15dp"
         android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/signin"
+        app:layout_constraintBottom_toTopOf="@+id/more"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -116,7 +116,7 @@
         app:layout_constraintVertical_bias="0.848" />
 
     <TextView
-        android:id="@+id/editpassword"
+        android:id="@+id/ph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Password"
