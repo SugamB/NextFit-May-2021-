@@ -61,13 +61,7 @@
                     android:inputType="number"/>
 
             </LinearLayout>
-
-
-
         </LinearLayout>
-
-
-
 
     </RelativeLayout>
 
@@ -89,5 +83,12 @@
         android:layout_height="wrap_content"
         android:valueFrom="0"
         android:valueTo="100"/>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        app:menu="@menu/bottom_nav_bar"
+        />
 
 </LinearLayout>

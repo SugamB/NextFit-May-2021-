@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.palhackmagic.nextfit.R;
+import com.palhackmagic.nextfit.data.model.Calories;
 import com.palhackmagic.nextfit.data.model.Steps;
 import com.palhackmagic.nextfit.ui.StepsGraph;
 import com.palhackmagic.nextfit.ui.StepsUI;
@@ -39,6 +40,7 @@ public class Testapi extends AppCompatActivity {
     public String[] separated;
     String userId;
     public ArrayList<Steps> stepsArrayList = new ArrayList<>();
+    public Calories calories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,27 +82,27 @@ public class Testapi extends AppCompatActivity {
 //        String header1 = ""
         Log.i("TAG", profileUrl);
 
-        OkHttpClient client = new OkHttpClient();
-        OkHttpClient client2 = new OkHttpClient();
-        OkHttpClient client3 = new OkHttpClient();
-        OkHttpClient client4 = new OkHttpClient();
+        OkHttpClient profileClient = new OkHttpClient();
+        OkHttpClient stepActivityMonthClient = new OkHttpClient();
+        OkHttpClient activityClient = new OkHttpClient();
+        OkHttpClient heartrateClient = new OkHttpClient();
 
-        Request request = new Request.Builder()
+        Request profileRequest = new Request.Builder()
                 .url(profileUrl)
                 .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
                 .build();
 
-        Request request2 = new Request.Builder()
+        Request stepActivityMonthRequest = new Request.Builder()
                 .url(stepActivityMonthUrl)
                 .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
                 .build();
 
-        Request request3 = new Request.Builder()
+        Request activityRequest = new Request.Builder()
                 .url(activityUrl)
                 .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
                 .build();
 
-        Request request4 = new Request.Builder()
+        Request heartrateRequest = new Request.Builder()
                 .url(heartrateUrl)
                 .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
                 .build();
@@ -109,7 +111,8 @@ public class Testapi extends AppCompatActivity {
         Log.i("TAG", "------------------11111111---------------");
 
 
-        client.newCall(request).enqueue(new Callback() {
+        // Call for Profile
+        profileClient.newCall(profileRequest).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 String mMessage = e.getMessage();
@@ -151,8 +154,10 @@ public class Testapi extends AppCompatActivity {
 
         });
 
+
         Log.i("TAG", "------------------222222---------------");
-        client2.newCall(request2).enqueue(new Callback() {
+        // CAll for monthly steps activity
+        stepActivityMonthClient.newCall(stepActivityMonthRequest).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 String mMessage = e.getMessage().toString();
@@ -194,8 +199,10 @@ public class Testapi extends AppCompatActivity {
 
         });
 
+
         Log.i("TAG", "------------------333333---------------");
-        client3.newCall(request3).enqueue(new Callback() {
+        // CAll for Activity
+        activityClient.newCall(activityRequest).enqueue(new Callback() {
               @Override
               public void onFailure(Call call, IOException e) {
                   String mMessage = e.getMessage().toString();
@@ -208,15 +215,34 @@ public class Testapi extends AppCompatActivity {
 
                   String mMessage = response.body().string();
                   Log.i("TAG", mMessage);
+                  try {
+                      JSONObject jsonRootObject = new JSONObject(mMessage);
+                      JSONObject jsonObjectGoals = jsonRootObject.optJSONObject("goals");
+                      int goalCalories = Integer.parseInt( jsonObjectGoals.optString("caloriesOut") );
+                      JSONObject jsonObjectSummary = jsonRootObject.getJSONObject("summary");
+
+                      int activityCalories = Integer.parseInt( jsonObjectSummary.optString("activityCalories")); //probably means how much calories burned from doing some activity
+                      int caloriesBMR = Integer.parseInt( jsonObjectSummary.optString("caloriesBMR")); // dont know what it means
+                      int caloriesOut = Integer.parseInt( jsonObjectSummary.optString("caloriesOut")); // probably means how much calories the body actually burned (by metabolism and whatever)
+
+                      Log.i("TAG", goalCalories + ".." + activityCalories + ".." + caloriesBMR + ".." + caloriesOut);
+
+                      calories = new Calories(goalCalories, activityCalories, caloriesBMR, caloriesOut);
+
+                  } catch (Exception e) {
+
+                  }
               }
-});
+        });
 
 
-        client4.newCall(request4).enqueue(new Callback() {
+        // Call for Heart Rate
+        heartrateClient.newCall(heartrateRequest).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                String mMessage = e.getMessage().toString();
+            public void onFailure(Call call, IOException ioe) {
+                String mMessage = ioe.getMessage().toString();
                 Log.w("failure Response", mMessage);
+
 //call.cancel();
             }
 
@@ -226,6 +252,13 @@ public class Testapi extends AppCompatActivity {
                 String mMessage = response.body().string();
                 Log.i("TAG", "Heartrate should be here");
                 Log.i("TAG", mMessage);
+                try {
+                    JSONObject jsonRootObject = new JSONObject(mMessage);
+
+                } catch (Exception e) {
+
+                }
+
             }
         });
                              /*
