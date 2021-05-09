@@ -29,7 +29,6 @@ public class Landing extends AppCompatActivity {
 
     Button button1;
     Button logout;
-    Button prof;
     TextView user_name, user_email, user_phone;
     FirebaseAuth mAuth;
     DatabaseReference mref;
@@ -50,7 +49,6 @@ public class Landing extends AppCompatActivity {
 
         button1= findViewById(R.id.button);
         logout= findViewById(R.id.signout);
-        prof = findViewById(R.id.profile);
         user_name = findViewById(R.id.fName);
         user_email = findViewById(R.id.email);
         user_phone = findViewById(R.id.phoneNum);
@@ -82,6 +80,7 @@ public class Landing extends AppCompatActivity {
             public void onClick(View v) {
                 CustomTabsIntent.Builder customTabIntent = new CustomTabsIntent.Builder();
                 openCustomTabs(Landing.this,customTabIntent.build(), Uri.parse(url));
+//                startActivity(new Intent(Landing.this, profile.class));
             }
         });
 
@@ -91,13 +90,6 @@ public class Landing extends AppCompatActivity {
                 mAuth.signOut();
                 startActivity(new Intent(Landing.this, LoginActivity.class));
                 finish();
-            }
-        });
-
-        prof.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), profile.class));
             }
         });
     }

@@ -65,17 +65,6 @@ public class Testapi extends AppCompatActivity {
         String stepActivityMonthUrl = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1m.json";
         String stepsActivityWeekUrl = "https://api.fitbit.com/1/user/-/activities/steps/date/today/1w.json";
 
-        ;
-
-//        Log.i("TAG", "------------------TestAPI activity starts here ---------------");
-//        Log.i("TAG", getIntent().getStringExtra("string"));
-//        Log.i("TAG", getIntent().getStringExtra("accessToken"));
-//        Log.i("TAG", getIntent().getStringExtra("userId"));
-//        Log.i("TAG", getIntent().getStringExtra("tokenType"));
-
-
-
-//        String header1 = ""
         Log.i("TAG", profileUrl);
 
         OkHttpClient client = new OkHttpClient();
@@ -91,8 +80,6 @@ public class Testapi extends AppCompatActivity {
                 .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
                 .build();
 
-//        Response response = client.newCall(request).execute();
-//        Log.e(TAG, response.body().string());
         Log.i("TAG", "------------------11111111---------------");
 
 

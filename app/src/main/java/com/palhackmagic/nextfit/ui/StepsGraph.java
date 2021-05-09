@@ -2,10 +2,12 @@ package com.palhackmagic.nextfit.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -17,14 +19,31 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.palhackmagic.nextfit.R;
 import com.palhackmagic.nextfit.data.model.BigValueFormatter;
 import com.palhackmagic.nextfit.data.model.DateValueFormatter;
 import com.palhackmagic.nextfit.data.model.Steps;
+import com.palhackmagic.nextfit.data.Testapi;
 
 import java.util.ArrayList;
+import java.util.Map;
+
+import static android.os.Parcelable.*;
 
 public class StepsGraph extends AppCompatActivity {
+
+    FirebaseAuth mAuth;
+    FirebaseDatabase database;
+    DatabaseReference mref;
+    String userId;
+    int array;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +52,28 @@ public class StepsGraph extends AppCompatActivity {
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
         TextView textView = (TextView) findViewById(R.id.titleTV);
 
+        database = FirebaseDatabase.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getCurrentUser().getUid();
+        mref = database.getReference("Users").child("userId").child("fitbitsteps");
 
-        Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("BUNDLE");
+        mref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+               if(snapshot.exists()){
+                   Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
 
-        ArrayList<Steps> stepsArrayList = (ArrayList<Steps>) bundle.getSerializable("StepsArrayList");
+                  map.get();
+               }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+//        ArrayList<Steps> stepsArrayList = new ArrayList<>();
         ArrayList<Entry> entries = new ArrayList<Entry>();
         ArrayList<String> xLables = new ArrayList<>();
         int i = 1;
@@ -108,5 +144,6 @@ public class StepsGraph extends AppCompatActivity {
         Log.i("P", height + " ------ " + width);
         yAxisTitle.setLayoutParams(new LinearLayout.LayoutParams(height, width));
         Log.i("P", height + " -- " + width);
-    }
-}
+
+            }
+        }
