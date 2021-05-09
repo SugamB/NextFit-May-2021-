@@ -5,21 +5,8 @@
     android:layout_width="match_parent"
     android:background="@color/colorAccent"
     android:layout_height="match_parent"
-    tools:context=".data.Landing">
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="183dp"
-            android:layout_height="53dp"
-            android:background="@drawable/buttonstyleithgradient"
-            android:text="Sync Fitbit"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.543"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.663" />
+    tools:context=".data.Landing"
+    android:theme="@style/Theme.MaterialComponents">
 
         <Button
             android:id="@+id/signout"
@@ -28,12 +15,12 @@
             android:background="@drawable/buttonstyleithgradient"
             android:text="Logout"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.546"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.89" />
+            app:layout_constraintVertical_bias="0.923" />
 
         <Button
             android:id="@+id/profile"
@@ -44,10 +31,10 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.541"
+            app:layout_constraintHorizontal_bias="0.546"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.774" />
+            app:layout_constraintVertical_bias="0.642" />
 
         <ImageView
             android:id="@+id/imageView1"
@@ -156,12 +143,10 @@
             android:layout_width="107dp"
             android:layout_height="108dp"
             android:src="@drawable/newlogo"
-            app:layout_constraintBottom_toTopOf="@+id/button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.551"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.243" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView"
@@ -180,5 +165,14 @@
             app:layout_constraintTop_toBottomOf="@+id/top"
             app:layout_constraintVertical_bias="0.0" />
 
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationBar"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/bottom_nav_bar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

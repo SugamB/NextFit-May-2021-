@@ -9,11 +9,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,13 +30,13 @@ import com.palhackmagic.nextfit.ui.login.LoginActivity;
 
 public class Landing extends AppCompatActivity {
 
-    Button button1;
     Button logout;
     Button prof;
     TextView user_name, user_email, user_phone;
     FirebaseAuth mAuth;
     DatabaseReference mref;
     String userId;
+    BottomNavigationView bottomNavigationView;
 
     String url = "https://www.fitbit.com/oauth2/authorize?" +
             "response_type=token" +
@@ -48,13 +51,14 @@ public class Landing extends AppCompatActivity {
         setContentView(R.layout.activity_landing);
         mAuth = FirebaseAuth.getInstance();
 
-        button1= findViewById(R.id.button);
         logout= findViewById(R.id.signout);
         prof = findViewById(R.id.profile);
         user_name = findViewById(R.id.fName);
         user_email = findViewById(R.id.email);
         user_phone = findViewById(R.id.phoneNum);
 
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationBar);
+        bottomNavigationView.getMenu().getItem(1).setChecked(true);
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
 
@@ -77,11 +81,17 @@ public class Landing extends AppCompatActivity {
             }
         });
 
-        button1.setOnClickListener(new View.OnClickListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                CustomTabsIntent.Builder customTabIntent = new CustomTabsIntent.Builder();
-                openCustomTabs(Landing.this,customTabIntent.build(), Uri.parse(url));
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.syncFitbit :
+                        CustomTabsIntent.Builder customTabIntent = new CustomTabsIntent.Builder();
+                        openCustomTabs(Landing.this,customTabIntent.build(), Uri.parse(url));
+                        return true;
+                    case R.id.home : return true;
+                }
+                return false;
             }
         });
 
@@ -113,4 +123,11 @@ public class Landing extends AppCompatActivity {
             customTabsIntent.launchUrl(activity,uri);
 //            activity.startActivity(new Intent(Intent.ACTION_VIEW));
         }
-    }}
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bottomNavigationView.getMenu().getItem(1).setChecked(true);
+    }
+}
