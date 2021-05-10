@@ -28,6 +28,11 @@ import com.palhackmagic.nextfit.SignUpActivity;
 import com.palhackmagic.nextfit.profile;
 import com.palhackmagic.nextfit.ui.login.LoginActivity;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Landing extends AppCompatActivity {
 
     Button logout;
@@ -110,6 +115,27 @@ public class Landing extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), profile.class));
             }
         });
+
+        DatabaseReference stepRef = mref.child("fitbitsteps");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> list = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    String date = dataSnapshot.getKey();
+                    Integer value = Integer.parseInt(dataSnapshot.getValue().toString());
+                    Log.i("TAG", date + "--> " + value);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+
+        stepRef.addListenerForSingleValueEvent(valueEventListener);
+
     }
 
     public static void openCustomTabs(Activity activity, CustomTabsIntent customTabsIntent, Uri uri){
