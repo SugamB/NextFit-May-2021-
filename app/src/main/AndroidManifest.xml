@@ -19,12 +19,7 @@
         android:label="NextFit"
         android:roundIcon="@drawable/newlogo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar" >
-        <activity
-            android:name=".MainNavDrawer"
-            android:label="@string/title_activity_main_nav_drawer"
-            android:theme="@style/AppTheme.NoActionBar.NoActionBar" >
-        </activity>
+        android:theme="@style/AppTheme.NoActionBar">
 
         <uses-library
             android:name="com.google.android.wearable"
