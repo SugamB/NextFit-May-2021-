@@ -1,6 +1,5 @@
 package com.palhackmagic.nextfit.data.model;
 
-import android.util.Log;
 
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.ValueFormatter;
@@ -9,7 +8,6 @@ public class BigValueFormatter extends ValueFormatter {
 
     @Override
     public String getAxisLabel(float value, AxisBase axis) {
-        Log.i("VAL", String.valueOf(value) + "  " + getConvertedValue(value));
         return getConvertedValue(value);
     }
 

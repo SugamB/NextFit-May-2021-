@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.palhackmagic.nextfit.R;
 import com.palhackmagic.nextfit.SignUpActivity;
+import com.palhackmagic.nextfit.data.model.Steps;
 import com.palhackmagic.nextfit.profile;
 import com.palhackmagic.nextfit.ui.login.LoginActivity;
 
@@ -42,6 +43,7 @@ public class Landing extends AppCompatActivity {
     DatabaseReference mref;
     String userId;
     BottomNavigationView bottomNavigationView;
+    public ArrayList<Steps> stepsArrayList = new ArrayList<>();
 
     String url = "https://www.fitbit.com/oauth2/authorize?" +
             "response_type=token" +
@@ -115,26 +117,6 @@ public class Landing extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), profile.class));
             }
         });
-
-        DatabaseReference stepRef = mref.child("fitbitsteps");
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<String> list = new ArrayList<>();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String date = dataSnapshot.getKey();
-                    Integer value = Integer.parseInt(dataSnapshot.getValue().toString());
-                    Log.i("TAG", date + "--> " + value);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-
-        stepRef.addListenerForSingleValueEvent(valueEventListener);
 
     }
 
