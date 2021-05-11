@@ -27,6 +27,7 @@ import com.palhackmagic.nextfit.R;
 import com.palhackmagic.nextfit.SignUpActivity;
 import com.palhackmagic.nextfit.data.model.Steps;
 import com.palhackmagic.nextfit.profile;
+import com.palhackmagic.nextfit.ui.StepsGraph;
 import com.palhackmagic.nextfit.ui.login.LoginActivity;
 
 import java.util.ArrayList;
@@ -97,6 +98,9 @@ public class Landing extends AppCompatActivity {
                         openCustomTabs(Landing.this,customTabIntent.build(), Uri.parse(url));
                         return true;
                     case R.id.home : return true;
+                    case R.id.graph :
+                        Intent intent = new Intent(getApplicationContext(), StepsGraph.class);
+                        startActivity(intent);
                 }
                 return false;
             }

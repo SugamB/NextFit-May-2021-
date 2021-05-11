@@ -45,7 +45,7 @@ public class Testapi extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_testapi);
+//        setContentView(R.layout.activity_testapi);
 
         mrootref = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -280,7 +280,7 @@ public class Testapi extends AppCompatActivity {
                             */
 
 
-
+        /*
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -300,5 +300,7 @@ public class Testapi extends AppCompatActivity {
             }
         });
 
+         */
+        finish();
     }
 }

@@ -52,7 +52,6 @@ public class StepsGraph extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        Bundle bundle = intent.getBundleExtra("BUNDLE");
 
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
