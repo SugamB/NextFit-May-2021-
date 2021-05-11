@@ -45,7 +45,7 @@ public class Testapi extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_testapi);
+        setContentView(R.layout.activity_testapi);
 
         mrootref = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -183,7 +183,7 @@ public class Testapi extends AppCompatActivity {
                             @Override
                             public void run() {
                                 String a = date + "->" + steps;
-                                textViewSteps.append(a + "\n");
+//                                textViewSteps.append(a + "\n");
                             }
                         });
 
