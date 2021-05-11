@@ -45,16 +45,11 @@ public class Testapi extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_testapi);
 
         mrootref = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
 
-        final TextView textViewSteps = (TextView) findViewById(R.id.textviewSteps);
-        final TextView textViewProfile = (TextView) findViewById(R.id.textviewProfile);
-        final Button nextButton = (Button) findViewById(R.id.nextActivity);
-        final Button btnGraph = (Button) findViewById(R.id.nextActivityGraph);
 
         Log.i("TAG", "------------------TestAPI activity starts here ---------------");
         Log.i("TAG", getIntent().getStringExtra("string"));
@@ -179,13 +174,6 @@ public class Testapi extends AppCompatActivity {
 
                         Log.i("TAG", date + " -> " + steps);
                         stepsArrayList.add(new Steps(date, steps));
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                String a = date + "->" + steps;
-//                                textViewSteps.append(a + "\n");
-                            }
-                        });
 
                         final HashMap<String, Object> map = new HashMap<>();
                         map.put(date, steps);
@@ -228,6 +216,7 @@ public class Testapi extends AppCompatActivity {
                       Log.i("TAG", goalCalories + ".." + activityCalories + ".." + caloriesBMR + ".." + caloriesOut);
 
                       calories = new Calories(goalCalories, activityCalories, caloriesBMR, caloriesOut);
+                      mrootref.child("Users").child(userId).child("Calories").setValue(activityCalories);
 
                   } catch (Exception e) {
 

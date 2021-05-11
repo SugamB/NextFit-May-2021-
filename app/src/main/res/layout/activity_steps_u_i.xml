@@ -65,30 +65,4 @@
 
     </RelativeLayout>
 
-    <Button
-        android:id="@+id/btn_dec"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="-10" />
-
-    <Button
-        android:id="@+id/btn_inc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+10" />
-
-    <com.google.android.material.slider.Slider
-        android:id="@+id/slider"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:valueFrom="0"
-        android:valueTo="100"/>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationBar"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        app:menu="@menu/bottom_nav_bar"
-        />
-
 </LinearLayout>

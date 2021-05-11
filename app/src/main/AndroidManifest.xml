@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.palhackmagic.nextfit">
+    package="com.palhackmagic.nextfit" >
 
     <uses-sdk
         android:minSdkVersion="28"
@@ -19,11 +19,16 @@
         android:label="NextFit"
         android:roundIcon="@drawable/newlogo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme.NoActionBar" >
+        <activity
+            android:name=".MainNavDrawer"
+            android:label="@string/title_activity_main_nav_drawer"
+            android:theme="@style/AppTheme.NoActionBar.NoActionBar" >
+        </activity>
+
         <uses-library
             android:name="com.google.android.wearable"
             android:required="false" />
-
         <!--
                Set to true if your app is Standalone, that is, it does not require the handheld
                app to run.
@@ -34,10 +39,10 @@
 
         <activity
             android:name=".ui.StepsGraph"
-            android:label="@string/title_activity_steps_graph"/>
+            android:label="@string/title_activity_steps_graph" />
         <activity
             android:name=".ui.StepsUI"
-            android:label="@string/title_activity_steps_u_i"/>
+            android:label="@string/title_activity_steps_u_i" />
         <activity android:name=".data.model.Listview" />
         <activity android:name=".data.Testapi" />
         <activity android:name=".data.Landing" />
@@ -48,7 +53,7 @@
         <activity
             android:name=".ui.login.LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,7 +62,7 @@
         </activity>
         <activity
             android:name=".data.LoginCallBack"
-            android:label="Test">
+            android:label="Test" >
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

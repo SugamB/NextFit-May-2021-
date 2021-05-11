@@ -1,16 +1,16 @@
 package com.palhackmagic.nextfit.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -32,26 +32,22 @@ import com.palhackmagic.nextfit.data.model.Steps;
 
 import java.util.ArrayList;
 
-public class StepsGraph extends AppCompatActivity {
+public class StepsGraph extends Fragment {
 
     public ArrayList<Steps> stepsArrayList = new ArrayList<>();
     FirebaseAuth mAuth;
     DatabaseReference mref;
     String userId;
 
-
-
+    @Nullable
     @Override
-    protected void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_steps_graph);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.activity_steps_graph, container, false);
 
-        LineChart lineChart = (LineChart) findViewById(R.id.chart);
+        LineChart lineChart = (LineChart) view.findViewById(R.id.chart);
         lineChart.setVisibility(View.INVISIBLE);
-        TextView textView = (TextView) findViewById(R.id.titleTV);
+        TextView textView = (TextView) view.findViewById(R.id.titleTV);
 
-
-        Intent intent = getIntent();
 
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
@@ -67,7 +63,7 @@ public class StepsGraph extends AppCompatActivity {
                     Log.i("TAG", date + "--> " + steps);
                     stepsArrayList.add(new Steps(date, steps));
                 }
-                drawGraph(stepsArrayList);
+                drawGraph(stepsArrayList, view);
             }
 
             @Override
@@ -77,14 +73,13 @@ public class StepsGraph extends AppCompatActivity {
         };
         stepRef.addListenerForSingleValueEvent(valueEventListener);
 
-        // WILL GET NO DATA IN ARRAYLIST BECAUSE DATA RETRIEVAL IS DONE IN LISTENER SO THE OTHER CODE RUNS FIRST BEFORE LISTENER
-
+        return view;
     }
 
-    public void drawGraph(ArrayList<Steps> stepsArrayList) {
+    public void drawGraph(ArrayList<Steps> stepsArrayList, View view) {
 
-        LineChart lineChart = (LineChart) findViewById(R.id.chart);
-        TextView textView = (TextView) findViewById(R.id.titleTV);
+        LineChart lineChart = (LineChart) view.findViewById(R.id.chart);
+        TextView textView = (TextView) view.findViewById(R.id.titleTV);
         Log.i("TAG", "HERE" + stepsArrayList.toString());
 
         while (stepsArrayList.size() > 31) {
@@ -104,7 +99,7 @@ public class StepsGraph extends AppCompatActivity {
         }
 
         LineDataSet lineDataSet = new LineDataSet(entries, "");
-        int color = ContextCompat.getColor(getApplicationContext(), R.color.chartColor);
+        int color = ContextCompat.getColor(getActivity(), R.color.chartColor);
         lineDataSet.setColor(color);
 //        lineDataSet.setValueTextColor();
         lineDataSet.setFillColor(color);

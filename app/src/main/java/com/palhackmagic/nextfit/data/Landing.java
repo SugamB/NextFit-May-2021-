@@ -3,6 +3,9 @@ package com.palhackmagic.nextfit.data;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -28,6 +31,7 @@ import com.palhackmagic.nextfit.SignUpActivity;
 import com.palhackmagic.nextfit.data.model.Steps;
 import com.palhackmagic.nextfit.profile;
 import com.palhackmagic.nextfit.ui.StepsGraph;
+import com.palhackmagic.nextfit.ui.StepsUI;
 import com.palhackmagic.nextfit.ui.login.LoginActivity;
 
 import java.util.ArrayList;
@@ -61,16 +65,22 @@ public class Landing extends AppCompatActivity {
 
         logout= findViewById(R.id.signout);
         prof = findViewById(R.id.profile);
-        user_name = findViewById(R.id.fName);
-        user_email = findViewById(R.id.email);
-        user_phone = findViewById(R.id.phoneNum);
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationBar);
         bottomNavigationView.getMenu().getItem(1).setChecked(true);
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
 
+        final Fragment stepsUI = new StepsUI();
+        final Fragment stepsGraph = new StepsGraph();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.stepsFragment, stepsUI);
+        fragmentTransaction.commit();
+
         mref = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
+        /*
         mref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -88,6 +98,8 @@ public class Landing extends AppCompatActivity {
                 Toast. makeText(Landing.this, "Error Loading User Profile" , Toast.LENGTH_SHORT).show();
             }
         });
+        removed this section to make room for stepsUI
+         */
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -97,10 +109,18 @@ public class Landing extends AppCompatActivity {
                         CustomTabsIntent.Builder customTabIntent = new CustomTabsIntent.Builder();
                         openCustomTabs(Landing.this,customTabIntent.build(), Uri.parse(url));
                         return true;
-                    case R.id.home : return true;
+                    case R.id.home :
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.stepsFragment, stepsUI);
+                        fragmentTransaction.commit();
+                        return true;
                     case R.id.graph :
-                        Intent intent = new Intent(getApplicationContext(), StepsGraph.class);
-                        startActivity(intent);
+                        FragmentManager fragmentManager1 = getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction1 = fragmentManager1.beginTransaction();
+                        fragmentTransaction1.replace(R.id.stepsFragment, stepsGraph);
+                        fragmentTransaction1.commit();
+                        return true;
                 }
                 return false;
             }
