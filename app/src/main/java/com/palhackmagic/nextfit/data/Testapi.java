@@ -1,38 +1,28 @@
 package com.palhackmagic.nextfit.data;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.palhackmagic.nextfit.R;
 import com.palhackmagic.nextfit.data.model.Calories;
 import com.palhackmagic.nextfit.data.model.Steps;
-import com.palhackmagic.nextfit.ui.StepsGraph;
-import com.palhackmagic.nextfit.ui.StepsUI;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
 public class Testapi extends AppCompatActivity {
     FirebaseAuth mAuth;
@@ -240,6 +230,28 @@ public class Testapi extends AppCompatActivity {
 
                 String mMessage = response.body().string();
                 Log.i("TAG", "Heartrate should be here");
+//                double steps = 13322;
+//                double stepscore =0;
+//                double stepgoal = 10000;
+//                double caloriegoal = 2814;
+//                double calories = 2201;
+//                double caloriescore=0;
+//                double max =1;
+//                double min =0;
+//                double ran = Math.random();
+//                Log.i("TAG", "random number:" + Double.toString(ran));
+//                if(steps>=stepgoal){ stepscore = 1;}
+//                else{stepscore = ((stepgoal-steps)/stepgoal) ;}
+//                Log.i("TAG", "Steps score:" + Double.toString(stepscore));
+//
+//                if(calories>=caloriegoal){ caloriescore =1;}
+//                else{caloriescore = (caloriegoal - calories)/caloriegoal ;}
+//                Log.i("TAG", "Calorie score:" +Double.toString(caloriescore));
+//
+//                int score = (int)(((stepscore*0.45)+(caloriescore*0.45)+(ran*0.1))*100);
+//                Log.i("TAG", "Final score: "+ Double.toString(score));
+//
+//
                 Log.i("TAG", mMessage);
                 try {
                     JSONObject jsonRootObject = new JSONObject(mMessage);
@@ -267,6 +279,8 @@ public class Testapi extends AppCompatActivity {
 
                             Using randomizer to give a sense of differing score with each passing moment
                             */
+
+
 
 
         /*
