@@ -39,5 +39,6 @@ public class LoginCallBack extends AppCompatActivity {
         intent.putExtra("tokenType",tokenType);
         startActivity(intent);
 
+        finish();
     }
 }

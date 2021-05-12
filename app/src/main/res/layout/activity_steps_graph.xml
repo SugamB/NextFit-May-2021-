@@ -1,42 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fitness1"
     android:gravity="center"
+    android:layout_gravity="center"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/yAxisTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:rotation="-90"
-            android:text="Steps"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="400dp" />
-
-    </LinearLayout>
+    <!--    <TextView-->
+    <!--        android:id="@+id/yAxisTitle"-->
+    <!--        android:layout_width="15dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:textSize="20sp"-->
+    <!--        android:textColor="@color/black"-->
+    <!--        android:text="Steps"-->
+    <!--        android:rotation="-90"-->
+    <!--        android:textAlignment="center"/>-->
 
     <TextView
         android:id="@+id/titleTV"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:text="Steps from"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="35sp" />
+        android:textSize="20sp"/>
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_marginBottom="156dp" />
 
 </LinearLayout>

@@ -3,150 +3,49 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@drawable/fitnessapp"
+    android:background="@color/white"
     android:layout_height="match_parent"
-    tools:context=".data.Landing">
+    tools:context=".data.Landing"
+    android:theme="@style/Theme.MaterialComponents">
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="183dp"
-            android:layout_height="53dp"
-            android:background="@drawable/buttonstyleithgradient"
-            android:text="Sync Fitbit"
-            android:textSize="16sp"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/stepsFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/bottomNavigationBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBar" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationBar"
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.543"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.781" />
+            app:menu="@menu/bottom_nav_bar" />
 
-        <Button
-            android:id="@+id/signout"
-            android:layout_width="184dp"
-            android:layout_height="56dp"
-            android:background="@drawable/buttonstyleithgradient"
-            android:text="Logout"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.546"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.89" />
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@color/white"
-            android:keyboardNavigationCluster="true"
-            android:src="@drawable/twotone_badge_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.077"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.348"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/fName"
-            android:layout_width="wrap_content"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:paddingLeft="20dp"
-            android:text="-----------"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.257"
-            app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.353"
-            tools:ignore="MissingConstraints" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@color/white"
-            android:src="@drawable/twotone_email_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.077"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.427"
-            tools:ignore="MissingConstraints" />
+            android:theme="@style/AppTheme">
 
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:paddingLeft="20dp"
-            android:text="-----------"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.257"
-            app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.431"
-            tools:ignore="MissingConstraints" />
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@color/white"
-            android:src="@drawable/twotone_call_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.077"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.512"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/phoneNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:paddingLeft="20dp"
-            android:text="-----------"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.257"
-            app:layout_constraintStart_toStartOf="@+id/imageView2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.512"
-            tools:ignore="MissingConstraints" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="164dp"
-            android:fontFamily="@font/almendra_bold_italic"
-            android:text="Welcome"
-            android:textAllCaps="true"
-            android:textColor="#FF5722"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/imageView1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.535"
-            app:layout_constraintStart_toStartOf="parent" />
-
-
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@color/colorAccent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_scrollFlags="scroll|enterAlways"
+                    android:theme="@style/AppTheme"/>
+        </com.google.android.material.appbar.AppBarLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
