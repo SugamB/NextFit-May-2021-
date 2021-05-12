@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fitnessapp"
+    android:background="@drawable/fitness3"
     tools:context=".data.Landing">
 
     <Button
@@ -187,7 +187,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Avg. Daily Steps"
-        android:textAllCaps="true"
+        android:textAllCaps="false"
         android:textColor="#F3DF31"
         android:textSize="18sp"
         android:textStyle="bold"

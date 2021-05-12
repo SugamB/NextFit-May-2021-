@@ -32,6 +32,7 @@ import com.palhackmagic.nextfit.data.model.Steps;
 import com.palhackmagic.nextfit.data.Testapi;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static android.os.Parcelable.*;
@@ -57,23 +58,25 @@ public class StepsGraph extends AppCompatActivity {
         userId = mAuth.getCurrentUser().getUid();
         mref = database.getReference("Users").child("userId").child("fitbitsteps");
 
-        mref.addListenerForSingleValueEvent(new ValueEventListener() {
+        ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-               if(snapshot.exists()){
-                   Map<String, Object> map = (Map<String, Object>) snapshot.getValue();
-
-                  map.get();
-               }
+                List<String> list = new ArrayList<>();
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    String eventID = ds.child("fitbitsteps").getValue(String.class);
+                    list.add(eventID);
+                    Log.d("TAG", eventID);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-        });
+        };
+        mref.addListenerForSingleValueEvent(eventListener);
 
-//        ArrayList<Steps> stepsArrayList = new ArrayList<>();
+        ArrayList<Steps> stepsArrayList = new ArrayList<>();
         ArrayList<Entry> entries = new ArrayList<Entry>();
         ArrayList<String> xLables = new ArrayList<>();
         int i = 1;
