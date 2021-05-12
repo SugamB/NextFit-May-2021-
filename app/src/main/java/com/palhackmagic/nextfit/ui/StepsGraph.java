@@ -1,3 +1,6 @@
+// USING MPANDROIDCHART LIBRARY THAT IS APACHE 2.0 LICENSED
+// NO CHANGE MADE TO ITS SOURCE CODE
+
 package com.palhackmagic.nextfit.ui;
 
 import android.os.Bundle;

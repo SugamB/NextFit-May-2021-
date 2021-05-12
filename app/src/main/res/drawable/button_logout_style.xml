@@ -3,10 +3,10 @@
     <item
         android:state_pressed="true"
         android:state_enabled="true"
-        android:drawable="@drawable/button_gradient">
+        android:drawable="@drawable/button_logout_gradient">
     </item>
     <item
         android:state_enabled="true"
-        android:drawable="@drawable/button_gradient">
+        android:drawable="@drawable/button_logout_gradient">
     </item>
 </selector>

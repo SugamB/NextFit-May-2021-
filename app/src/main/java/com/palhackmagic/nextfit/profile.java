@@ -2,8 +2,11 @@ package com.palhackmagic.nextfit;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.palhackmagic.nextfit.data.Landing;
+import com.palhackmagic.nextfit.ui.login.LoginActivity;
 
 public class profile extends AppCompatActivity {
 
@@ -37,6 +41,8 @@ public class profile extends AppCompatActivity {
         user_gender = findViewById(R.id.gend);
         user_height = findViewById(R.id.ht);
         user_steps = findViewById(R.id.avg);
+        AppCompatButton backToHome = findViewById(R.id.backtohome);
+        AppCompatButton logoutBtn = findViewById(R.id.logoutBtn);
 
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
@@ -67,6 +73,23 @@ public class profile extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast. makeText(profile.this, "Error Loading User Profile" , Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        backToHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), Landing.class));
+                finish();
+            }
+        });
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                startActivity(new Intent(profile.this, LoginActivity.class));
+                finish();
             }
         });
     }
