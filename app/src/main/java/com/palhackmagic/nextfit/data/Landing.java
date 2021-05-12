@@ -1,8 +1,11 @@
 package com.palhackmagic.nextfit.data;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -39,7 +42,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Landing extends AppCompatActivity {
+public class Landing extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     Button logout;
     Button prof;
@@ -49,6 +52,12 @@ public class Landing extends AppCompatActivity {
     String userId;
     BottomNavigationView bottomNavigationView;
     public ArrayList<Steps> stepsArrayList = new ArrayList<>();
+    // indexShown keeps tracks what item is shown so that item in navigation bar can be checked
+
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle actionBarDrawerToggle;
+
+    int indexShown = 1;
 
     String url = "https://www.fitbit.com/oauth2/authorize?" +
             "response_type=token" +
@@ -60,11 +69,18 @@ public class Landing extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_landing);
+        setContentView(R.layout.nav_drawer);
         mAuth = FirebaseAuth.getInstance();
 
-        logout= findViewById(R.id.signout);
-        prof = findViewById(R.id.profile);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawerLayout = findViewById(R.id.drawer_layout);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.drawer_open, R.string.drawer_close);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationBar);
         bottomNavigationView.getMenu().getItem(1).setChecked(true);
@@ -74,9 +90,9 @@ public class Landing extends AppCompatActivity {
         final Fragment stepsUI = new StepsUI();
         final Fragment stepsGraph = new StepsGraph();
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        final FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.stepsFragment, stepsUI);
+        fragmentTransaction.replace(R.id.stepsFragment, stepsUI, "stepsUI");
         fragmentTransaction.commit();
 
         mref = FirebaseDatabase.getInstance().getReference().child("Users").child(userId);
@@ -101,6 +117,11 @@ public class Landing extends AppCompatActivity {
         removed this section to make room for stepsUI
          */
 
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            navigationView.setNavigationItemSelectedListener(this);
+        }
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -110,35 +131,19 @@ public class Landing extends AppCompatActivity {
                         openCustomTabs(Landing.this,customTabIntent.build(), Uri.parse(url));
                         return true;
                     case R.id.home :
-                        FragmentManager fragmentManager = getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.stepsFragment, stepsUI);
+                        fragmentTransaction.replace(R.id.stepsFragment, stepsUI, "stepsUI");
                         fragmentTransaction.commit();
+                        indexShown = 1;
                         return true;
                     case R.id.graph :
-                        FragmentManager fragmentManager1 = getSupportFragmentManager();
-                        FragmentTransaction fragmentTransaction1 = fragmentManager1.beginTransaction();
-                        fragmentTransaction1.replace(R.id.stepsFragment, stepsGraph);
+                        FragmentTransaction fragmentTransaction1 = fragmentManager.beginTransaction();
+                        fragmentTransaction1.replace(R.id.stepsFragment, stepsGraph, "stepsGraph");
                         fragmentTransaction1.commit();
+                        indexShown = 2;
                         return true;
                 }
                 return false;
-            }
-        });
-
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAuth.signOut();
-                startActivity(new Intent(Landing.this, LoginActivity.class));
-                finish();
-            }
-        });
-
-        prof.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), profile.class));
             }
         });
 
@@ -160,6 +165,24 @@ public class Landing extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        bottomNavigationView.getMenu().getItem(1).setChecked(true);
+        bottomNavigationView.getMenu().getItem(indexShown).setChecked(true);
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.logoutItem :
+                mAuth.signOut();
+                startActivity(new Intent(Landing.this, LoginActivity.class));
+                finish();
+                return true;
+            case R.id.profileItem :
+                startActivity(new Intent(getApplicationContext(), profile.class));
+                return true;
+        }
+
+        return false;
     }
 }
