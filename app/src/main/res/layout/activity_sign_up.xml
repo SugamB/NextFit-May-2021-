@@ -126,7 +126,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/buttoncustom"
+        android:background="@drawable/buttonstyle_square"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/register"
         android:textColor="@color/white"
@@ -150,13 +150,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.817" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_gotologin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/buttoncustom"
+        android:background="@drawable/button_style_black_square"
         android:fontFamily="@font/roboto_regular"
         android:text="@string/login"
         android:textColor="@color/white"

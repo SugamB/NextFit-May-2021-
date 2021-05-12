@@ -2,26 +2,19 @@ package com.palhackmagic.nextfit.data;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.palhackmagic.nextfit.R;
-import com.palhackmagic.nextfit.data.model.Calories;
 import com.palhackmagic.nextfit.data.model.Steps;
-import com.palhackmagic.nextfit.ui.StepsGraph;
-import com.palhackmagic.nextfit.ui.StepsUI;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.io.Serializable;
 import java.util.ArrayList;
 
 import okhttp3.Call;
@@ -30,17 +23,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-
 public class Testapi extends AppCompatActivity {
     FirebaseAuth mAuth;
     private DatabaseReference mrootref;
     public String[] separated;
     String userId;
     public ArrayList<Steps> stepsArrayList = new ArrayList<>();
-    public Calories calories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,7 +180,6 @@ public class Testapi extends AppCompatActivity {
 
                       Log.i("TAG", goalCalories + ".." + activityCalories + ".." + caloriesBMR + ".." + caloriesOut);
 
-                      calories = new Calories(goalCalories, activityCalories, caloriesBMR, caloriesOut);
                       mrootref.child("Users").child(userId).child("Calories").setValue(activityCalories);
 
                   } catch (Exception e) {
