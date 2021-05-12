@@ -3,66 +3,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center_horizontal"
     android:gravity="center"
     android:orientation="vertical"
     tools:context=".ui.StepsUI"
     android:theme="@style/Theme.MaterialComponents">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <ProgressBar
-            android:id="@+id/progressbar"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-            android:indeterminate="false"
-            android:indeterminateOnly="false"
-            android:progressDrawable="@drawable/circular_progress" />
+        <include
+            layout="@layout/score_circle_layout"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
 
         <LinearLayout
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_centerInParent="true">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Steps"
-                android:textAlignment="center"
-                android:textColor="#000"
-                android:textSize="15pt" />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="center"
-                android:gravity="center">
-                <TextView
-                    android:id="@+id/TVSteps"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0/"
-                    android:textColor="#000"
-                    android:textSize="15pt"
-                    android:textAlignment="center"/>
-                <EditText
-                    android:id="@+id/ETSteps"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textColor="#000"
-                    android:textSize="15pt"
-                    android:textAlignment="center"
-                    android:inputType="number"/>
+            <include
+                layout="@layout/steps_circle_layout"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_weight="0.5" />
 
-            </LinearLayout>
+            <include
+                layout="@layout/calories_circle_layout"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_weight="0.5" />
         </LinearLayout>
-
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

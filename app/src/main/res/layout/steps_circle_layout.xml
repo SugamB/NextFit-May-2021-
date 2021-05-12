@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ui.StepsUI"
+    android:theme="@style/Theme.MaterialComponents">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/stepsProgressbar"
+                android:layout_width="200dp"
+                android:layout_height="149dp"
+                android:indeterminate="false"
+                android:indeterminateOnly="false"
+                android:progressDrawable="@drawable/circular_progress" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Steps"
+                    android:textAlignment="center"
+                    android:textColor="#000"
+                    android:textSize="13pt" />
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="135dp">
+            <TextView
+                android:id="@+id/TVSteps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/"
+                android:textSize="30sp"
+                android:textColor="#000"
+                android:textAlignment="center"/>
+            <EditText
+                android:id="@+id/ETSteps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="30sp"
+                android:textColor="#000"
+                android:textAlignment="center"
+                android:inputType="number"/>
+
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

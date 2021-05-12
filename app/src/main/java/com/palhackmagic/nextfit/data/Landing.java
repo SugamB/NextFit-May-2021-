@@ -81,6 +81,7 @@ public class Landing extends AppCompatActivity implements NavigationView.OnNavig
         actionBarDrawerToggle.syncState();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationBar);
         bottomNavigationView.getMenu().getItem(1).setChecked(true);

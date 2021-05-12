@@ -30,14 +30,26 @@ import com.palhackmagic.nextfit.R;
 
 public class StepsUI extends Fragment {
 
-    public int goal_steps = 100;
+    public int goal_steps = 5000;
     public int current_steps = 75;
+
 
     FirebaseAuth mAuth;
     String userId;
 
-    int calories = 0;
+    int goal_calories = 200;
+    int current_calories = 0;
 
+    ProgressBar stepsProgressBar;
+    TextView tvSteps;
+    EditText etSteps;
+
+    ProgressBar caloriesProgressBar;
+    TextView tvCalories;
+    EditText etCalories;
+
+    ProgressBar scoreProgressBar;
+    TextView tvScore;
 
     public int getGoal_steps() {
         return goal_steps;
@@ -52,19 +64,21 @@ public class StepsUI extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_steps_u_i, container, false);
 
-        DatabaseReference mrootref = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference mrootref = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         userId = mAuth.getCurrentUser().getUid();
+        DatabaseReference userRef = mrootref.child("Users").child(userId);
 
-        final ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressbar);
+        stepsProgressBar = (ProgressBar) view.findViewById(R.id.stepsProgressbar);
         final TextView tvSteps = (TextView) view.findViewById(R.id.TVSteps);
         final EditText etSteps = (EditText) view.findViewById(R.id.ETSteps);
 
-        progressBar.setMax(goal_steps);
-        progressBar.setProgress(current_steps);
-        String temp = current_steps + "/";
-        tvSteps.setText(temp);
-        etSteps.setText(Integer.toString(goal_steps));
+        caloriesProgressBar = (ProgressBar) view.findViewById(R.id.caloriesProgressbar);
+        final TextView tvCalories = (TextView) view.findViewById(R.id.TVCalories);
+        final EditText etCalories = (EditText) view.findViewById(R.id.ETCalories);
+
+        scoreProgressBar = (ProgressBar) view.findViewById(R.id.scoreProgressbar);
+        final TextView tvScore = (TextView) view.findViewById(R.id.TVScore);
 
         etSteps.addTextChangedListener(new TextWatcher() {
             @Override
@@ -77,12 +91,18 @@ public class StepsUI extends Fragment {
                 try {
                     String temp = s.toString();
                     goal_steps = Integer.parseInt(temp);
-                    progressBar.setMax(goal_steps);
-                    progressBar.setProgress(current_steps);
+                    stepsProgressBar.setMax(goal_steps);
+                    stepsProgressBar.setProgress(current_steps);
+
+                    mrootref.child("Users").child(userId).child("goalSteps").setValue(goal_steps);
+
+                    Scoring(tvScore);
                 }
                 catch (Exception e) {
                     etSteps.setText(Integer.toString(goal_steps));
+
                 }
+                Scoring(tvScore);
             }
 
             @Override
@@ -91,16 +111,53 @@ public class StepsUI extends Fragment {
             }
         });
 
-        DatabaseReference caloriesRef = mrootref.child("Users").child(userId).child("Calories");
+        etCalories.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    String temp = s.toString();
+                    goal_calories = Integer.parseInt(temp);
+                    caloriesProgressBar.setMax(goal_calories);
+                    caloriesProgressBar.setProgress(current_calories);
+
+                    mrootref.child("Users").child(userId).child("goalCalories").setValue(goal_calories);
+
+                    Log.i("TAG", "Good");
+                    Log.i("TAG", String.valueOf(goal_calories));
+                    Scoring(tvScore);
+                }
+                catch (Exception e) {
+                    etCalories.setText(Integer.toString(goal_calories));
+                    Log.i("TAG", "BAD3");
+                }
+                Scoring(tvScore);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        DatabaseReference caloriesRef = userRef.child("Calories");
         caloriesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 try {
-                    calories = (int) snapshot.getValue();
+                    current_calories = ((Long) snapshot.getValue()).intValue();
+                    caloriesProgressBar.setProgress(current_calories);
+                    updateText(tvCalories, current_calories);
+                    Scoring(tvScore);
                 }
                 catch (Exception e) {
+                    Log.i("TAG", "BAD1");
+
                 }
-                updateCalories(calories);
             }
 
             @Override
@@ -108,16 +165,115 @@ public class StepsUI extends Fragment {
 
             }
         });
+
+        DatabaseReference stepRef = userRef.child("todaySteps");
+        stepRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    current_steps = ((Long) snapshot.getValue()).intValue();
+                    stepsProgressBar.setProgress(current_steps);
+                    updateText(tvSteps, current_steps);
+                    Scoring(tvScore);
+
+                }
+                catch (Exception e) {
+                    Log.i("TAG", "BAD2");
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        DatabaseReference goalStepRef = userRef.child("goalSteps");
+        goalStepRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    goal_steps = ((Long) snapshot.getValue()).intValue();
+                    stepsProgressBar.setMax(goal_steps);
+                    stepsProgressBar.setProgress(current_steps);
+                    etSteps.setText(Integer.toString(goal_steps));
+                    Scoring(tvScore);
+                    Log.i("TAG", String.valueOf(goal_steps));
+                }
+                catch (Exception e) {
+                    Log.i("TAG", String.valueOf(e));
+                    Log.i("TAG", "SHVBK");
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        final DatabaseReference goalCaloriesRef = userRef.child("goalCalories");
+        goalCaloriesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                try {
+                    goal_calories = ((Long) snapshot.getValue()).intValue();
+                    caloriesProgressBar.setMax(goal_calories);
+                    caloriesProgressBar.setProgress(current_calories);
+                    updateText(tvCalories, current_calories);
+                    etCalories.setText(Integer.toString(goal_calories));
+                    Scoring(tvScore);
+                }
+                catch (Exception e) {
+                    Log.i("TAG", "BAAAADD");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        // NOT UPDATING OR INITIALIZING ANY UI BECAUSE IT MESSES UP THE DATABASE LISTENERS
+        // IT SETS THE VALUE BEFORE THE VALUE IS RETRIEVED FROM DATABASE SO EVERYTIME THE APP IS RUN, IT ONLY HAS DUMMY VALUES FOR GOALS
+        // SO BY NOT INITIALIZING, WE LET DATABASE LISTENERS DO THE INITIALIZATION FOR US
+
         return view;
 
     }
 
-    public void updateText(TextView textView, int current_steps, int goal_steps) {
-        String temp = current_steps + "/";
+
+    public void setupListeners() {
+
+    }
+
+    public void updateText(TextView textView, int current_value) {
+        String temp = current_value + "/";
         textView.setText(temp);
     }
 
-    public void updateCalories(int calories) {
-        Log.i("TAG", String.valueOf(calories));
+    public void Scoring(TextView textView) {
+        double steps = current_steps;
+        double stepscore =0;
+        double stepgoal = goal_steps;
+        double caloriegoal = goal_calories;
+        double calories = current_calories;
+        double caloriescore=0;
+
+        double ran = Math.random();
+        Log.i("TAG", "random number:" + Double.toString(ran));
+        if(steps>=stepgoal){ stepscore = 1;}
+        else{stepscore = 1 - ((stepgoal-steps)/stepgoal) ;}
+        Log.i("TAG", "Steps score:" + Double.toString(stepscore) + "-->" + goal_steps + "-->" + current_steps);
+        if(calories>=caloriegoal){ caloriescore =1;}
+        else{caloriescore = 1 - (caloriegoal - calories)/caloriegoal ;}
+        Log.i("TAG", "Calorie score:" +Double.toString(caloriescore) + "-->" + goal_calories  + "-->" + current_calories);
+        int score = (int) ( ( (stepscore*0.45) + (caloriescore*0.45) + (ran*0.1) )*100 );
+        Log.i("TAG", "Final score: "+ Double.toString(score));
+        updateText(textView, score);
+        scoreProgressBar.setProgress(score);
     }
 }
