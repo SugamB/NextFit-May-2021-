@@ -51,23 +51,28 @@ public class profile extends AppCompatActivity {
         mref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String fullName = snapshot.child("displayName").getValue().toString();
-                String firstName = snapshot.child("firstName").getValue().toString();
-                String lastName = snapshot.child("lastName").getValue().toString();
-                String dateofbirth = snapshot.child("dateOfBirth").getValue().toString();
-                String age = snapshot.child("age").getValue().toString();
-                String averagesteps = snapshot.child("averageDailySteps").getValue().toString();
-                String gender = snapshot.child("gender").getValue().toString();
-                String height = snapshot.child("height").getValue().toString();
+                try {
+                    String fullName = snapshot.child("displayName").getValue().toString();
+                    String firstName = snapshot.child("firstName").getValue().toString();
+                    String lastName = snapshot.child("lastName").getValue().toString();
+                    String dateofbirth = snapshot.child("dateOfBirth").getValue().toString();
+                    String age = snapshot.child("age").getValue().toString();
+                    String averagesteps = snapshot.child("averageDailySteps").getValue().toString();
+                    String gender = snapshot.child("gender").getValue().toString();
+                    String height = snapshot.child("height").getValue().toString();
 
-                user_fullName.setText(fullName);
-                user_fname.setText(firstName);
-                user_lname.setText(lastName);
-                user_dob.setText(dateofbirth);
-                user_age.setText(age);
-                user_steps.setText(averagesteps);
-                user_gender.setText(gender);
-                user_height.setText(height);
+                    user_fullName.setText(fullName);
+                    user_fname.setText(firstName);
+                    user_lname.setText(lastName);
+                    user_dob.setText(dateofbirth);
+                    user_age.setText(age);
+                    user_steps.setText(averagesteps);
+                    user_gender.setText(gender);
+                    user_height.setText(height);
+                }
+                catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Sync Fitbit to get your Profile Information", Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

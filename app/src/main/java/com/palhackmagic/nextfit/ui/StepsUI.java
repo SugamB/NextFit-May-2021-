@@ -4,11 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,7 +29,7 @@ import com.palhackmagic.nextfit.R;
 public class StepsUI extends Fragment {
 
     public int goal_steps = 5000;
-    public int current_steps = 75;
+    public int current_steps = 0;
 
 
     FirebaseAuth mAuth;
@@ -127,13 +125,10 @@ public class StepsUI extends Fragment {
 
                     mrootref.child("Users").child(userId).child("goalCalories").setValue(goal_calories);
 
-                    Log.i("TAG", "Good");
-                    Log.i("TAG", String.valueOf(goal_calories));
                     Scoring(tvScore);
                 }
                 catch (Exception e) {
                     etCalories.setText(Integer.toString(goal_calories));
-                    Log.i("TAG", "BAD3");
                 }
                 Scoring(tvScore);
             }
@@ -155,7 +150,6 @@ public class StepsUI extends Fragment {
                     Scoring(tvScore);
                 }
                 catch (Exception e) {
-                    Log.i("TAG", "BAD1");
 
                 }
             }
@@ -178,7 +172,6 @@ public class StepsUI extends Fragment {
 
                 }
                 catch (Exception e) {
-                    Log.i("TAG", "BAD2");
 
                 }
             }
@@ -199,11 +192,8 @@ public class StepsUI extends Fragment {
                     stepsProgressBar.setProgress(current_steps);
                     etSteps.setText(Integer.toString(goal_steps));
                     Scoring(tvScore);
-                    Log.i("TAG", String.valueOf(goal_steps));
                 }
                 catch (Exception e) {
-                    Log.i("TAG", String.valueOf(e));
-                    Log.i("TAG", "SHVBK");
 
                 }
             }
@@ -227,7 +217,6 @@ public class StepsUI extends Fragment {
                     Scoring(tvScore);
                 }
                 catch (Exception e) {
-                    Log.i("TAG", "BAAAADD");
                 }
             }
 
@@ -246,10 +235,6 @@ public class StepsUI extends Fragment {
     }
 
 
-    public void setupListeners() {
-
-    }
-
     public void updateText(TextView textView, int current_value) {
         String temp = current_value + "/";
         textView.setText(temp);
@@ -264,15 +249,11 @@ public class StepsUI extends Fragment {
         double caloriescore=0;
 
         double ran = Math.random();
-        Log.i("TAG", "random number:" + Double.toString(ran));
         if(steps>=stepgoal){ stepscore = 1;}
         else{stepscore = 1 - ((stepgoal-steps)/stepgoal) ;}
-        Log.i("TAG", "Steps score:" + Double.toString(stepscore) + "-->" + goal_steps + "-->" + current_steps);
         if(calories>=caloriegoal){ caloriescore =1;}
         else{caloriescore = 1 - (caloriegoal - calories)/caloriegoal ;}
-        Log.i("TAG", "Calorie score:" +Double.toString(caloriescore) + "-->" + goal_calories  + "-->" + current_calories);
         int score = (int) ( ( (stepscore*0.45) + (caloriescore*0.45) + (ran*0.1) )*100 );
-        Log.i("TAG", "Final score: "+ Double.toString(score));
         updateText(textView, score);
         scoreProgressBar.setProgress(score);
     }

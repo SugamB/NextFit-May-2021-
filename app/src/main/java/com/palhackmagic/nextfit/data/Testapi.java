@@ -3,7 +3,7 @@ package com.palhackmagic.nextfit.data;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -44,7 +44,6 @@ public class Testapi extends AppCompatActivity {
         String activityUrl = "https://api.fitbit.com/1/user/-/activities/date/today.json";
         String heartrateUrl = "https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1min.json";
 
-        Log.i("TAG", profileUrl);
 
         OkHttpClient profileClient = new OkHttpClient();
         OkHttpClient stepActivityMonthClient = new OkHttpClient();
@@ -70,7 +69,6 @@ public class Testapi extends AppCompatActivity {
                 .url(heartrateUrl)
                 .header("Authorization", "Bearer " + getIntent().getStringExtra("accessToken"))
                 .build();
-        Log.i("TAG", "------------------11111111---------------");
 
 
         // Call for Profile
@@ -78,13 +76,11 @@ public class Testapi extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 String mMessage = e.getMessage();
-                Log.w("failure Response", mMessage);
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String mMessage = response.body().string();
-                Log.i("TAG", mMessage);
                 try {
                     JSONObject jsonRootObject = new JSONObject(mMessage);
                     JSONObject jsonObject = jsonRootObject.optJSONObject("user");
@@ -112,13 +108,11 @@ public class Testapi extends AppCompatActivity {
         });
 
 
-        Log.i("TAG", "------------------222222---------------");
         // CAll for monthly steps activity
         stepActivityMonthClient.newCall(stepActivityMonthRequest).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 String mMessage = e.getMessage().toString();
-                Log.w("failure Response", mMessage);
                 //call.cancel();
             }
 
@@ -136,7 +130,6 @@ public class Testapi extends AppCompatActivity {
                         steps = Integer.parseInt(jsonObject.optString("value"));
                         date = jsonObject.optString("dateTime");
 
-                        Log.i("TAG", date + " -> " + steps);
                         stepsArrayList.add(new Steps(date, steps));
 
                         final HashMap<String, Object> map = new HashMap<>();
@@ -153,13 +146,11 @@ public class Testapi extends AppCompatActivity {
         });
 
 
-        Log.i("TAG", "------------------333333---------------");
         // CAll for Activity
         activityClient.newCall(activityRequest).enqueue(new Callback() {
               @Override
               public void onFailure(Call call, IOException e) {
                   String mMessage = e.getMessage().toString();
-                  Log.w("failure Response", mMessage);
 //call.cancel();
               }
 
@@ -167,7 +158,6 @@ public class Testapi extends AppCompatActivity {
               public void onResponse(Call call, Response response) throws IOException {
 
                   String mMessage = response.body().string();
-                  Log.i("TAG", mMessage);
                   try {
                       JSONObject jsonRootObject = new JSONObject(mMessage);
                       JSONObject jsonObjectGoals = jsonRootObject.optJSONObject("goals");
@@ -178,7 +168,6 @@ public class Testapi extends AppCompatActivity {
                       int caloriesBMR = Integer.parseInt( jsonObjectSummary.optString("caloriesBMR")); // dont know what it means
                       int caloriesOut = Integer.parseInt( jsonObjectSummary.optString("caloriesOut")); // probably means how much calories the body actually burned (by metabolism and whatever)
 
-                      Log.i("TAG", goalCalories + ".." + activityCalories + ".." + caloriesBMR + ".." + caloriesOut);
 
                       mrootref.child("Users").child(userId).child("Calories").setValue(activityCalories);
 
@@ -194,7 +183,6 @@ public class Testapi extends AppCompatActivity {
             @Override
             public void onFailure(Call call, IOException ioe) {
                 String mMessage = ioe.getMessage().toString();
-                Log.w("failure Response", mMessage);
 
 //call.cancel();
             }
@@ -203,8 +191,6 @@ public class Testapi extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
 
                 String mMessage = response.body().string();
-                Log.i("TAG", "Heartrate should be here");
-                Log.i("TAG", mMessage);
                 try {
                     JSONObject jsonRootObject = new JSONObject(mMessage);
 
@@ -214,6 +200,8 @@ public class Testapi extends AppCompatActivity {
 
             }
         });
+
+        Toast.makeText(getApplicationContext(), "Fitbit Sync Successful", Toast.LENGTH_LONG).show();
 
         finish();
     }

@@ -3,12 +3,13 @@
 
 package com.palhackmagic.nextfit.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.palhackmagic.nextfit.R;
+import com.palhackmagic.nextfit.data.Landing;
 import com.palhackmagic.nextfit.data.model.BigValueFormatter;
 import com.palhackmagic.nextfit.data.model.DateValueFormatter;
 import com.palhackmagic.nextfit.data.model.Steps;
@@ -61,10 +63,15 @@ public class StepsGraph extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String date = dataSnapshot.getKey();
-                    Integer steps = Integer.parseInt(dataSnapshot.getValue().toString());
-                    Log.i("TAG", date + "--> " + steps);
-                    stepsArrayList.add(new Steps(date, steps));
+                    try {
+                        String date = dataSnapshot.getKey();
+                        Integer steps = Integer.parseInt(dataSnapshot.getValue().toString());
+                        stepsArrayList.add(new Steps(date, steps));
+                    }
+                    catch (Exception e) {
+                        Toast.makeText(getActivity(), "Sync Fitbit to get your Profile Information", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(getActivity(), Landing.class));
+                    }
                 }
                 drawGraph(stepsArrayList, view);
             }
@@ -83,7 +90,13 @@ public class StepsGraph extends Fragment {
 
         LineChart lineChart = (LineChart) view.findViewById(R.id.chart);
         TextView textView = (TextView) view.findViewById(R.id.titleTV);
-        Log.i("TAG", "HERE" + stepsArrayList.toString());
+
+        // Fitbit didnt sync
+        if (stepsArrayList.size() == 0) {
+            Toast.makeText(getActivity(), "Sync Fitbit to see Graph", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getActivity(), Landing.class));
+            return;
+        }
 
         while (stepsArrayList.size() > 31) {
             stepsArrayList.remove(0);
@@ -126,8 +139,6 @@ public class StepsGraph extends Fragment {
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setValueFormatter(new DateValueFormatter(xLables));
-        Log.i("TAG", String.valueOf(xLables.size()));
-        Log.i("TAG", String.valueOf(xLables));
         xAxis.setLabelCount(xLables.size()/2, false);
         xAxis.setDrawGridLines(false);
         xAxis.setTextSize(15);
