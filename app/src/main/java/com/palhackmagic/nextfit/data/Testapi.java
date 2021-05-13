@@ -201,7 +201,7 @@ public class Testapi extends AppCompatActivity {
             }
         });
 
-        Toast.makeText(getApplicationContext(), "Fitbit Sync Successful", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Fitbit Sync Successful", Toast.LENGTH_SHORT).show();
 
         finish();
     }
